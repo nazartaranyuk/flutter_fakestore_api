@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 abstract final class ProjectColors {
   static const Color bgPrimary = Colors.white;

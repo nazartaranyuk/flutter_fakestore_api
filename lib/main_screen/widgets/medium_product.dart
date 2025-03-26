@@ -1,5 +1,4 @@
 import 'package:fakestore_api/colors.dart';
-import 'package:fakestore_api/main_screen/widgets/small_products.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
