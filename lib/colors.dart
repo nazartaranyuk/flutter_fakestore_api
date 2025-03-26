@@ -1,0 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+abstract final class ProjectColors {
+  static const Color bgPrimary = Colors.white;
+  static const Color bgSecondary = Colors.black;
+  static const Color bgButton = Color.fromARGB(121, 105, 186, 240);
+  static const Color bgSearch = Color.fromARGB(255, 225, 225, 225);
+}

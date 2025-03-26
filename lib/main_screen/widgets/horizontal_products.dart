@@ -11,13 +11,13 @@ class HorizontalProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250,
+      height: 300,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: list.length,
         itemBuilder: (context, index) {
-          final item = list[index];
-          return SmallProduct(product: item);
+          final product = list[index];
+          return SmallProduct(product: product);
       }),
     );
   }

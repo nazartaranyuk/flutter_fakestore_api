@@ -18,8 +18,8 @@ class SmallProduct extends StatelessWidget {
       child: SizedBox(
         width: 150,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               width: 150,
@@ -30,36 +30,69 @@ class SmallProduct extends StatelessWidget {
                 image: DecorationImage(image: NetworkImage(imageUrl ?? "")),
               ),
             ),
+            SizedBox(height: 4,),
             Text(
               "${product.title}",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.roboto(
+                color: ProjectColors.bgSecondary,
+                fontWeight: FontWeight.w600,
+                fontSize: 16
+              ),
+            ),
+            Text(
+              "${product.description}",
               maxLines: 2,
-              style: TextStyle(color: ProjectColors.bgSecondary),
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.roboto(color: Colors.black, fontSize: 14),
             ),
-            SizedBox(height: 20),
-            Container(
-              width: 250,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: ProjectColors.bgButton,
-              ),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Add to bucket",
-                        style: GoogleFonts.roboto(fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(width: 5,),
-                      SvgPicture.asset("assets/cart_icon.svg", color: Colors.black),
-                    ],
-                  ),
-                ),
+            SizedBox(height: 4,),
+            Text(
+              "\$${product.price}.00",
+              style: GoogleFonts.roboto(
+                color: ProjectColors.bgSecondary,
+                fontWeight: FontWeight.w500,
               ),
             ),
+            SizedBox(height: 8),
+            AddToBucketButton(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddToBucketButton extends StatelessWidget {
+  const AddToBucketButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => {},
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      child: Container(
+        width: 250,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: ProjectColors.bgButton,
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Add to bucket",
+                  style: GoogleFonts.roboto(fontWeight: FontWeight.w600),
+                ),
+                SizedBox(width: 5),
+                SvgPicture.asset("assets/cart_icon.svg", color: Colors.black),
+              ],
+            ),
+          ),
         ),
       ),
     );
