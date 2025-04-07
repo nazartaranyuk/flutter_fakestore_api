@@ -10,7 +10,7 @@ class MediumProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? imageUrl = product.images?.first;
+    final String? imageUrl = product.image;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -28,8 +28,9 @@ class MediumProduct extends StatelessWidget {
                     height: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: ProjectColors.bgSecondary,
-                      image: DecorationImage(image: NetworkImage(imageUrl ?? "")),
+                      image: DecorationImage(
+                        image: NetworkImage(imageUrl ?? ""),
+                      ),
                     ),
                   ),
                 ),
@@ -38,15 +39,21 @@ class MediumProduct extends StatelessWidget {
                   bottom: 0,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 181, 181, 181),
-                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))
+                      color: Colors.black,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(4),
                       child: Text(
                         "${product.title}",
                         maxLines: 2,
-                        style: GoogleFonts.roboto(color: ProjectColors.bgPrimary, fontWeight: FontWeight.w700),
+                        style: GoogleFonts.roboto(
+                          color: ProjectColors.bgPrimary,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
