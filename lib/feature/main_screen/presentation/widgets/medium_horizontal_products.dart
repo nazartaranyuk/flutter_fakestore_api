@@ -1,10 +1,9 @@
 import 'package:fakestore_api/feature/main_screen/presentation/widgets/medium_product.dart';
+import 'package:fakestore_api/model/product_v2.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../model/product.dart';
-
 class MediumHorizontalProducts extends StatelessWidget {
-  final List<Product> list;
+  final List<ProductV2> list;
 
   const MediumHorizontalProducts({super.key, required this.list});
 

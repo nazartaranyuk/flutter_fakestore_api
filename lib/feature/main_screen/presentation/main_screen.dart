@@ -3,8 +3,11 @@ import 'package:fakestore_api/feature/main_screen/presentation/main_view_model.d
 import 'package:fakestore_api/feature/main_screen/presentation/widgets/horizontal_products.dart';
 import 'package:fakestore_api/feature/main_screen/presentation/widgets/medium_horizontal_products.dart';
 import 'package:fakestore_api/feature/main_screen/presentation/widgets/search_widget.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/widgets/subtitle_widget.dart';
 import 'package:fakestore_api/feature/products_details_screen/product_details_screen.dart';
+import 'package:fakestore_api/feature/search_screen/search_screen.dart';
 import 'package:fakestore_api/model/product.dart';
+import 'package:fakestore_api/model/product_v2.dart';
 import 'package:fakestore_api/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +15,12 @@ import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
+
+  void onSearchClicked(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (builder) => SearchScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,11 @@ class MainScreen extends StatelessWidget {
               : Column(
                 children: [
                   SizedBox(height: 30),
-                  SearchWidget(),
+                  SearchWidget(
+                    onSearchClicked: () {
+                      onSearchClicked(context);
+                    },
+                  ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -46,10 +59,12 @@ class MainScreen extends StatelessWidget {
                               viewModel.addToBucket(pair.first, pair.second);
                             },
                           ),
-                          InnerMediumHorizontalBlock(
-                            subtitle: "In trends",
-                            list: viewModel.products,
-                          ),
+                          viewModel.isLoading
+                              ? Loader()
+                              : InnerMediumHorizontalBlock(
+                                subtitle: "In trends",
+                                list: viewModel.productsInTrending,
+                              ),
                         ],
                       ),
                     ),
@@ -89,14 +104,8 @@ class InnerHorizontalBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.all(5),
-          child: Text(
-            subtitle,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
+          padding: EdgeInsets.all(8),
+          child: SubtitleWidget(subtitle: subtitle)
         ),
         HorizontalProductsList(
           list: list,
@@ -116,7 +125,7 @@ class InnerMediumHorizontalBlock extends StatelessWidget {
   });
 
   final String subtitle;
-  final List<Product> list;
+  final List<ProductV2> list;
 
   @override
   Widget build(BuildContext context) {
@@ -125,13 +134,7 @@ class InnerMediumHorizontalBlock extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.all(5),
-          child: Text(
-            subtitle,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
+          child: SubtitleWidget(subtitle: subtitle)
         ),
         MediumHorizontalProducts(list: list),
       ],

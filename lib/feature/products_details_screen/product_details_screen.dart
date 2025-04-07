@@ -1,14 +1,10 @@
 import 'package:fakestore_api/api/endpoint_loader.dart';
 import 'package:fakestore_api/colors.dart';
 import 'package:fakestore_api/constants.dart';
-import 'package:fakestore_api/feature/main_screen/presentation/widgets/small_product.dart';
 import 'package:fakestore_api/model/product.dart';
-import 'package:fakestore_api/feature/products_details_screen/product_details_view_model.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final int id;
@@ -113,7 +109,7 @@ class ProductTitle extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
               "${product?.title}",
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 fontSize: 18,
               ),
@@ -131,7 +127,7 @@ class ProductTitle extends StatelessWidget {
               padding: EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 5),
               child: Text(
                 "\$${product?.price}.00",
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
                   color: Colors.white,
@@ -158,7 +154,7 @@ class ProductDescription extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         maxLines: 4,
         product?.description ?? Constants.emptyString,
-        style: GoogleFonts.roboto(fontSize: 14),
+        style: GoogleFonts.poppins(fontSize: 14),
       ),
     );
   }
@@ -188,7 +184,7 @@ class BigAddToBucketButton extends StatelessWidget {
               children: [
                 Text(
                   "Add to bucket",
-                  style: GoogleFonts.roboto(
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
                   ),

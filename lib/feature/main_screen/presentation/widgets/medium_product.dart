@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fakestore_api/colors.dart';
 import 'package:fakestore_api/model/product.dart';
+import 'package:fakestore_api/model/product_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MediumProduct extends StatelessWidget {
-  final Product product;
+  final ProductV2 product;
 
   const MediumProduct({super.key, required this.product});
 
@@ -28,9 +30,30 @@ class MediumProduct extends StatelessWidget {
                     height: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(imageUrl ?? ""),
-                      ),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl ?? "",
+                      width: 150,
+                      height: 150,
+                      imageBuilder:
+                          (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              image: DecorationImage(image: imageProvider),
+                            ),
+                          ),
+                      placeholder:
+                          (context, url) => Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                      errorWidget:
+                          (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -50,7 +73,7 @@ class MediumProduct extends StatelessWidget {
                       child: Text(
                         "${product.title}",
                         maxLines: 2,
-                        style: GoogleFonts.roboto(
+                        style: GoogleFonts.poppins(
                           color: ProjectColors.bgPrimary,
                           fontWeight: FontWeight.w700,
                         ),

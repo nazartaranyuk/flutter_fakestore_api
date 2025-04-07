@@ -22,6 +22,7 @@ class HorizontalProductsList extends StatelessWidget {
       height: 300,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 8),
         itemCount: list.length,
         itemBuilder: (context, index) {
           final product = list[index];

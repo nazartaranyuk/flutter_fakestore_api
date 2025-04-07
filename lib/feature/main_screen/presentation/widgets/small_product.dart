@@ -24,7 +24,7 @@ class SmallProduct extends StatelessWidget {
     final String imageUrl = product.image ?? "";
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.only(right: 8),
       child: SizedBox(
         width: 150,
         child: Column(
@@ -67,7 +67,7 @@ class SmallProduct extends StatelessWidget {
               "${product.title}",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.poppins(
                 color: ProjectColors.bgSecondary,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -77,12 +77,12 @@ class SmallProduct extends StatelessWidget {
               "${product.description}",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.roboto(color: Colors.black, fontSize: 14),
+              style: GoogleFonts.poppins(color: Colors.black, fontSize: 14),
             ),
             SizedBox(height: 4),
             Text(
               "\$${product.price}.00",
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.poppins(
                 color: ProjectColors.bgSecondary,
                 fontWeight: FontWeight.w500,
               ),
@@ -112,8 +112,8 @@ class AddToBucketButton extends StatelessWidget {
       child: Container(
         width: 250,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: ProjectColors.bgButton,
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+          color: ProjectColors.buttonColor,
         ),
         child: Center(
           child: Padding(
@@ -123,10 +123,10 @@ class AddToBucketButton extends StatelessWidget {
               children: [
                 Text(
                   "Add to bucket",
-                  style: GoogleFonts.roboto(fontWeight: FontWeight.w600),
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: ProjectColors.textColorSecondary),
                 ),
                 SizedBox(width: 5),
-                SvgPicture.asset("assets/cart_icon.svg", color: Colors.black),
+                SvgPicture.asset("assets/cart_icon.svg", color: Colors.white),
               ],
             ),
           ),

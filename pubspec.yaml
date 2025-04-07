@@ -67,6 +67,9 @@ flutter:
   assets:
     - assets/cart_icon.svg
     - assets/search_icon.svg
+    - assets/user_icon.svg
+    - assets/cart_black_icon.svg
+    - assets/wishlist_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

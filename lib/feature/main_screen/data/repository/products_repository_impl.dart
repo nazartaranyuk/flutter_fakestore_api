@@ -1,6 +1,7 @@
 import 'package:fakestore_api/api/endpoint_loader.dart';
 import 'package:fakestore_api/feature/main_screen/domain/interfaces/products_repository.dart';
 import 'package:fakestore_api/model/product.dart';
+import 'package:fakestore_api/model/products_v2_response.dart';
 
 class ProductsRepositoryImpl extends ProductsRepository {
   final EndpointLoader apiService;
@@ -8,16 +9,16 @@ class ProductsRepositoryImpl extends ProductsRepository {
 
   @override
   Future<List<Product>> fetchMainProducts() async {
-    return await apiService.fetchProducts();
+    return await apiService.fetchProductsFromComApi();
   }
 
   @override
   Future<List<Product>> fetchMediumProducts() async {
-    return await apiService.fetchProducts();
+    return await apiService.fetchProductsFromComApi();
   }
 
   @override
-  Future<List<Product>> fetchProductsInTrending() async {
-    return await apiService.fetchProducts();
+  Future<ProductsV2Response> fetchProductsInTrending() async {
+    return await apiService.fetchProductsFromInApi();
   }
 }
