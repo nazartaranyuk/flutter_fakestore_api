@@ -1,17 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fakestore_api/colors.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logging/logging.dart';
 
 class SmallProduct extends StatelessWidget {
+  final logger = Logger("SmallProduct");
   final Product product;
+  final ValueSetter<int> onProductClicked;
+  final VoidCallback onAddToBucketClicked;
 
-  const SmallProduct({super.key, required this.product});
+  SmallProduct({
+    super.key,
+    required this.product,
+    required this.onProductClicked,
+    required this.onAddToBucketClicked,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final String? imageUrl = product.images?.first;
+    final String imageUrl = product.image ?? "";
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -21,16 +31,38 @@ class SmallProduct extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
+            GestureDetector(
+              onTap: () {
+                if (product.id != null) {
+                  onProductClicked(product.id!);
+                }
+              },
+              child: InkWell(
                 borderRadius: BorderRadius.circular(10),
-                color: ProjectColors.bgSecondary,
-                image: DecorationImage(image: NetworkImage(imageUrl ?? "")),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  width: 150,
+                  height: 150,
+                  imageBuilder:
+                      (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          image: DecorationImage(image: imageProvider),
+                        ),
+                      ),
+                  placeholder:
+                      (context, url) => Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
               ),
             ),
-            SizedBox(height: 4,),
+            SizedBox(height: 4),
             Text(
               "${product.title}",
               maxLines: 1,
@@ -38,7 +70,7 @@ class SmallProduct extends StatelessWidget {
               style: GoogleFonts.roboto(
                 color: ProjectColors.bgSecondary,
                 fontWeight: FontWeight.w600,
-                fontSize: 16
+                fontSize: 16,
               ),
             ),
             Text(
@@ -47,7 +79,7 @@ class SmallProduct extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.roboto(color: Colors.black, fontSize: 14),
             ),
-            SizedBox(height: 4,),
+            SizedBox(height: 4),
             Text(
               "\$${product.price}.00",
               style: GoogleFonts.roboto(
@@ -56,7 +88,12 @@ class SmallProduct extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            AddToBucketButton(),
+            GestureDetector(
+              onTap: () {
+                onAddToBucketClicked();
+              },
+              child: AddToBucketButton(),
+            ),
           ],
         ),
       ),

@@ -1,7 +1,7 @@
-import 'package:fakestore_api/main_screen/widgets/medium_product.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/widgets/medium_product.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/product.dart';
+import '../../../../model/product.dart';
 
 class MediumHorizontalProducts extends StatelessWidget {
   final List<Product> list;

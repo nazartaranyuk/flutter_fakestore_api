@@ -1,5 +1,7 @@
-import 'package:fakestore_api/main_screen/main_screen.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/main_screen.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/main_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
+      home: ChangeNotifierProvider(
+        child: const MainScreen(),
+        create: (_) => MainViewModel(),
+      ),
     );
   }
 }
