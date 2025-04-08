@@ -1,4 +1,4 @@
-import 'package:fakestore_api/colors.dart';
+import 'package:fakestore_api/core/utils/colors.dart';
 import 'package:fakestore_api/feature/main_screen/presentation/widgets/cart_small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,7 +12,7 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 8, right: 8, top: 20),
+      padding: EdgeInsets.only(left: 8, right: 8),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,

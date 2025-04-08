@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:fakestore_api/constants.dart';
+import 'package:fakestore_api/core/utils/constants.dart';
+import 'package:fakestore_api/model/categories/categories_v2_response.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:fakestore_api/model/products_v2_response.dart';
 import 'package:http/http.dart' as http;
 
-class EndpointLoader {
+class ApiService {
   static final String baseUrl = "https://fakestoreapi.com";
   static final String baseUrl2 = "https://fakestoreapi.in/api";
 
@@ -17,6 +18,16 @@ class EndpointLoader {
       return Product.fromJson(jsonData);
     } else {
       throw Exception("Failed to fetch single product by this id: $id");
+    }
+  }
+
+  Future<CategoriesV2Response> fetchCategoriesV2() async {
+    final response = await http.get(Uri.parse("$baseUrl2/products/category"));
+    if (response.statusCode == Constants.successCode) {
+      final dynamic jsonData = jsonDecode(response.body);
+      return CategoriesV2Response.fromJson(jsonData);
+    } else {
+      throw Exception("Failed to load json data");
     }
   }
 

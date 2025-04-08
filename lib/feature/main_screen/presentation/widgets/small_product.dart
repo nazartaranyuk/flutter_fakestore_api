@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fakestore_api/colors.dart';
+import 'package:fakestore_api/core/utils/colors.dart';
+import 'package:fakestore_api/core/widgets/loader.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -55,7 +56,7 @@ class SmallProduct extends StatelessWidget {
                         child: SizedBox(
                           width: 50,
                           height: 50,
-                          child: CircularProgressIndicator(),
+                          child: Loader(),
                         ),
                       ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -92,7 +93,7 @@ class SmallProduct extends StatelessWidget {
               onTap: () {
                 onAddToBucketClicked();
               },
-              child: AddToBucketButton(),
+              child: AddToBucketButton(buttonColor: ProjectColors.buttonColor,),
             ),
           ],
         ),
@@ -102,7 +103,8 @@ class SmallProduct extends StatelessWidget {
 }
 
 class AddToBucketButton extends StatelessWidget {
-  const AddToBucketButton({super.key});
+  final Color buttonColor;
+  const AddToBucketButton({super.key, required this.buttonColor});
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +112,9 @@ class AddToBucketButton extends StatelessWidget {
       onTap: () => {},
       borderRadius: BorderRadius.all(Radius.circular(10)),
       child: Container(
-        width: 250,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
-          color: ProjectColors.buttonColor,
+          color: buttonColor,
         ),
         child: Center(
           child: Padding(

@@ -1,6 +1,6 @@
 import 'package:fakestore_api/api/endpoint_loader.dart';
-import 'package:fakestore_api/colors.dart';
-import 'package:fakestore_api/constants.dart';
+import 'package:fakestore_api/core/utils/colors.dart';
+import 'package:fakestore_api/core/utils/constants.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,7 +15,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Product details screen")),
       body: FutureBuilder(
-        future: EndpointLoader().fetchSingleProduct(id),
+        future: ApiService().fetchSingleProduct(id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

@@ -19,10 +19,4 @@ class ProductsV2Response {
           json['products'].map((item) => ProductV2.fromJson(item)),
         ),
       );
-
-  Map<String, dynamic> toJson() => {
-    'status': status,
-    'message': message,
-    'products': products.map((p) => p.toJson()).toList(),
-  };
 }

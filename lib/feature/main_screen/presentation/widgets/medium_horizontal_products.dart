@@ -10,7 +10,7 @@ class MediumHorizontalProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 270,
+      height: 300,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: list.length,

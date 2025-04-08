@@ -40,6 +40,7 @@ dependencies:
   logging: ^1.3.0
   provider: ^6.1.4
   cached_network_image: ^3.4.1
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,11 @@ flutter:
     - assets/user_icon.svg
     - assets/cart_black_icon.svg
     - assets/wishlist_icon.svg
+    - assets/json/loader.json
+    - assets/json/guy.json
+    - assets/categories/category_gaming_icon.svg
+    - assets/categories/category_audio_icon.svg
+    - assets/categories/category_mobile_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

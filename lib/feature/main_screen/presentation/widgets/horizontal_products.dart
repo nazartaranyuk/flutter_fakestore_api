@@ -1,5 +1,5 @@
 import 'package:fakestore_api/feature/main_screen/presentation/widgets/small_product.dart';
-import 'package:fakestore_api/utils.dart';
+import 'package:fakestore_api/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../model/product.dart';

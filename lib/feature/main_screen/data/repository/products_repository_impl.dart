@@ -4,7 +4,7 @@ import 'package:fakestore_api/model/product.dart';
 import 'package:fakestore_api/model/products_v2_response.dart';
 
 class ProductsRepositoryImpl extends ProductsRepository {
-  final EndpointLoader apiService;
+  final ApiService apiService;
   ProductsRepositoryImpl({required this.apiService});
 
   @override
