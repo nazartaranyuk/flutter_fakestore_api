@@ -14,9 +14,9 @@ class MainProducts extends StatelessWidget {
   });
 
   final ValueSetter<int> onProductClicked;
-  final ValueSetter<Pair<int, int>> onAddToBucketClicked;
+  final ValueSetter<Pair<Product, int>> onAddToBucketClicked;
   final String subtitle;
-  final List<Product> list;
+  final ValueNotifier<List<Product>> list;
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fakestore_api/core/utils/colors.dart';
 import 'package:fakestore_api/core/widgets/loader.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/widgets/add_to_bucket_button_state.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logging/logging.dart';
+
+import 'add_to_bucket_button.dart';
 
 class SmallProduct extends StatelessWidget {
   final logger = Logger("SmallProduct");
@@ -82,7 +84,7 @@ class SmallProduct extends StatelessWidget {
             ),
             SizedBox(height: 4),
             Text(
-              "\$${product.price}.00",
+              "\$${product.price}",
               style: GoogleFonts.poppins(
                 color: ProjectColors.bgSecondary,
                 fontWeight: FontWeight.w500,
@@ -93,44 +95,9 @@ class SmallProduct extends StatelessWidget {
               onTap: () {
                 onAddToBucketClicked();
               },
-              child: AddToBucketButton(buttonColor: ProjectColors.buttonColor,),
+              child: AddToBucketButton(state: product.buttonState ?? BucketInitial(),),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AddToBucketButton extends StatelessWidget {
-  final Color buttonColor;
-  const AddToBucketButton({super.key, required this.buttonColor});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => {},
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-          color: buttonColor,
-        ),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Add to bucket",
-                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: ProjectColors.textColorSecondary),
-                ),
-                SizedBox(width: 5),
-                SvgPicture.asset("assets/cart_icon.svg", color: Colors.white),
-              ],
-            ),
-          ),
         ),
       ),
     );

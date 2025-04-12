@@ -13,7 +13,7 @@ class SubtitleWidget extends StatelessWidget {
       children: [
         Container(
           height: 30,
-          width: 10,
+          width: 15,
           decoration: BoxDecoration(color: ProjectColors.buttonColor, borderRadius: BorderRadius.all(Radius.circular(4))),
         ),
         SizedBox(width: 5,),

@@ -1,4 +1,4 @@
-import 'package:fakestore_api/api/endpoint_loader.dart';
+import 'package:fakestore_api/core/api/api_service.dart';
 import 'package:fakestore_api/feature/main_screen/domain/interfaces/products_repository.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:fakestore_api/model/products_v2_response.dart';

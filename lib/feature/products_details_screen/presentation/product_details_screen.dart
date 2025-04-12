@@ -1,71 +1,85 @@
-import 'package:fakestore_api/api/endpoint_loader.dart';
 import 'package:fakestore_api/core/utils/colors.dart';
 import 'package:fakestore_api/core/utils/constants.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/widgets/search_widget.dart';
+import 'package:fakestore_api/feature/products_details_screen/presentation/product_details_view_model.dart';
+import 'package:fakestore_api/feature/products_details_screen/presentation/state/product_screen_state.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../../../core/widgets/loader.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final int id;
+
   const ProductDetailsScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Product details screen")),
-      body: FutureBuilder(
-        future: ApiService().fetchSingleProduct(id),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("${snapshot.error}"));
-          } else {
-            final product = snapshot.data;
-            return Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ProductImage(product: product),
-                          ProductTitle(product: product),
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 201, 201, 201),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text(product?.category ?? "Category"),
-                              ),
-                            ),
+    ProductDetailsViewModel viewModel = Provider.of<ProductDetailsViewModel>(
+      context,
+    );
+
+    Widget handleState(ProductScreenState state) {
+      if (state is LoadingState) {
+        return Center(child: Loader());
+      } else if (state is SuccessState) {
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ProductImage(product: state.product),
+                      ProductTitle(product: state.product),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 201, 201, 201),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
-                          ProductDescription(product: product),
-                        ],
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(state.product.category ?? "Category"),
+                          ),
+                        ),
                       ),
-                    ),
+                      ProductDescription(product: state.product),
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: BigAddToBucketButton(onAddToBucketClicked: () {}),
-                ),
-              ],
-            );
-          }
-        },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: BigAddToBucketButton(onAddToBucketClicked: () {}),
+            ),
+          ],
+        );
+      } else {
+        return Center();
+      }
+    }
+
+    return Scaffold(
+      backgroundColor: ProjectColors.bgPrimary,
+      appBar: AppBar(
+        surfaceTintColor: Colors.white,
+        title: Padding(
+          padding: EdgeInsets.only(right: 16),
+          child: SearchField(onSearchClicked: () {}),
+        ),
+        backgroundColor: Colors.white,
+        titleSpacing: 0,
       ),
+      body: SafeArea(child: handleState(viewModel.state)),
     );
   }
 }
@@ -101,10 +115,9 @@ class ProductTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: 10, top: 5),
-          child: SizedBox(
-            width: 250,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(left: 10, top: 5),
             child: Text(
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
@@ -126,7 +139,7 @@ class ProductTitle extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 5),
               child: Text(
-                "\$${product?.price}.00",
+                "\$${product?.price}",
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
@@ -171,10 +184,10 @@ class BigAddToBucketButton extends StatelessWidget {
       onTap: () => {},
       borderRadius: BorderRadius.all(Radius.circular(10)),
       child: Container(
-        height: 50,
+        height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: ProjectColors.bgButton,
+          color: ProjectColors.buttonColor,
         ),
         child: Center(
           child: Padding(
@@ -186,11 +199,11 @@ class BigAddToBucketButton extends StatelessWidget {
                   "Add to bucket",
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600,
-                    fontSize: 18,
+                    color: ProjectColors.bgPrimary,
+                    fontSize: 16,
                   ),
                 ),
                 SizedBox(width: 5),
-                SvgPicture.asset("assets/cart_icon.svg", color: Colors.black),
               ],
             ),
           ),

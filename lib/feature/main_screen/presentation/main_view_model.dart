@@ -1,31 +1,35 @@
-import 'package:fakestore_api/api/endpoint_loader.dart';
-import 'package:fakestore_api/feature/main_screen/data/repository/categories_repository_impl.dart';
-import 'package:fakestore_api/feature/main_screen/data/repository/products_repository_impl.dart';
+import 'package:fakestore_api/core/db/bucket_repository.dart';
 import 'package:fakestore_api/feature/main_screen/domain/use_cases/load_categories_use_case.dart';
 import 'package:fakestore_api/feature/main_screen/domain/use_cases/load_main_products_use_case.dart';
 import 'package:fakestore_api/feature/main_screen/domain/use_cases/load_products_in_trending_use_case.dart';
 import 'package:fakestore_api/feature/main_screen/presentation/util/category.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/widgets/add_to_bucket_button_state.dart';
 import 'package:fakestore_api/model/product.dart';
 import 'package:fakestore_api/model/product_v2.dart';
 import 'package:flutter/material.dart';
 
 class MainViewModel extends ChangeNotifier {
-  MainViewModel() {
+
+  final LoadCategoriesUseCase loadCategoriesUseCase;
+  final LoadMainProductsUseCase loadMainProductsUseCase;
+  final LoadProductsInTrendingUseCase loadProductsInTrendingUseCase;
+  final BucketRepository bucketRepository;
+
+  MainViewModel({
+    required this.loadCategoriesUseCase,
+    required this.loadMainProductsUseCase,
+    required this.loadProductsInTrendingUseCase,
+    required this.bucketRepository
+  }) {
     _loadMainProducts();
     _loadProductsInTrending();
     _loadCategories();
+    _getBucketCount();
   }
 
-  final loadCategoriesUseCase = LoadCategoriesUseCase(repository: CategoriesRepositoryImpl(apiService: ApiService()));
-
-  final loadMainProductsUseCase = LoadMainProductsUseCase(
-    repository: ProductsRepositoryImpl(apiService: ApiService()),
-  );
-  final loadProductsInTrendingUseCase = LoadProductsInTrendingUseCase(
-    repository: ProductsRepositoryImpl(apiService: ApiService()),
-  );
   List<Product> _products = [];
-  List<Product> get products => _products;
+  ValueNotifier<List<Product>> _itemsNotifier = ValueNotifier([]);
+  ValueNotifier<List<Product>> get itemsNotifier => _itemsNotifier;
 
   List<CategoryUI> _categories = [];
   List<CategoryUI> get categories => _categories;
@@ -36,12 +40,29 @@ class MainViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  bool _isAddToBucketButtonLoading = false;
-  bool get isAddToBucketButtonLoading => _isAddToBucketButtonLoading;
+  int _bucketCount = 0;
+  int get bucketCount => _bucketCount;
 
-  void addToBucket(int productId, int index) {
-    _isAddToBucketButtonLoading = true;
+  Future<void> _getBucketCount() async {
+    try {
+      var products = await bucketRepository.getAllProducts();
+      _bucketCount = products.length;
+    } catch (e) {
+      _bucketCount = 0;
+    }
     notifyListeners();
+  }
+
+  void addToBucket(Product product, int index) {
+    _products[index] = _products[index].copyWith(state: BucketLoading());
+    _itemsNotifier.value = _products;
+    notifyListeners();
+    Future.delayed(Duration(seconds: 1), () {
+      _products[index] = _products[index].copyWith(state: BucketSuccess());
+      _itemsNotifier.value = _products;
+      bucketRepository.saveProduct(product);
+      notifyListeners();
+    });
   }
 
   List<CategoryUI> _mapCategories(List<String> categoriesFromApi) {
@@ -89,6 +110,7 @@ class MainViewModel extends ChangeNotifier {
     }
     _isLoading = false;
     _products = _products.where((element) => element.price! < 50.0).toList();
+    _itemsNotifier = ValueNotifier(_products);
     notifyListeners();
   }
 }

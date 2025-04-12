@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fakestore_api/core/utils/base_text.dart';
 import 'package:fakestore_api/core/utils/colors.dart';
 import 'package:fakestore_api/core/widgets/loader.dart';
-import 'package:fakestore_api/feature/main_screen/presentation/widgets/small_product.dart';
+import 'package:fakestore_api/feature/main_screen/presentation/widgets/add_to_bucket_button_state.dart';
 import 'package:fakestore_api/model/product_v2.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'add_to_bucket_button.dart';
 
 class MediumProduct extends StatelessWidget {
   final ProductV2 product;
@@ -67,7 +68,7 @@ class MediumProduct extends StatelessWidget {
                 )
               ],
             ),
-            AddToBucketButton(buttonColor: ProjectColors.bgSecondary,)
+            AddToBucketButton(state: BucketInitial(),)
           ],
         ),
       ),

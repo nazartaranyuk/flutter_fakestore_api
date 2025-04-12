@@ -31,6 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.1
+  get_it: ^8.0.3
+  sqflite: ^2.3.0
+  path: ^1.8.3
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -69,6 +73,8 @@ flutter:
     - assets/cart_icon.svg
     - assets/search_icon.svg
     - assets/user_icon.svg
+    - assets/arrow_icon_up.svg
+    - assets/arrow_icon_down.svg
     - assets/cart_black_icon.svg
     - assets/wishlist_icon.svg
     - assets/json/loader.json

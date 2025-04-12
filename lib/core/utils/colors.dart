@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 abstract final class ProjectColors {
   static const Color textColorSecondary = Colors.white;
   static const Color buttonColor = Color(0xffDB4444);
+  static const Color buttonColorLoading = Color(0xff902d2d);
   static const Color bgPrimary = Colors.white;
   static const Color bgSecondary = Colors.black;
   static const Color bgButton = Color.fromARGB(121, 105, 186, 240);

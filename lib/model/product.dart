@@ -1,3 +1,5 @@
+import 'package:fakestore_api/feature/main_screen/presentation/widgets/add_to_bucket_button_state.dart';
+
 class Product {
   int? id;
   String? title;
@@ -5,6 +7,7 @@ class Product {
   String? description;
   String? category;
   String? image;
+  AddToBucketInnerState? buttonState = BucketInitial();
 
   Product({
     this.id,
@@ -13,6 +16,7 @@ class Product {
     this.description,
     this.category,
     this.image,
+    this.buttonState
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -36,6 +40,7 @@ class Product {
     String? description,
     String? category,
     String? image,
+    AddToBucketInnerState? state,
   }) {
     return Product(
       id: id ?? this.id,
@@ -44,6 +49,7 @@ class Product {
       description: description ?? this.description,
       category: category ?? this.category,
       image: image ?? this.image,
+      buttonState: state ?? buttonState,
     );
   }
 }

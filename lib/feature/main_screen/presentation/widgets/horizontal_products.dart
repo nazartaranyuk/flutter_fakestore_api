@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../../../../model/product.dart';
 
 class HorizontalProductsList extends StatelessWidget {
-  final List<Product> list;
+  final ValueNotifier<List<Product>> list;
   final ValueSetter<int> onProductClicked;
-  final ValueSetter<Pair<int, int>> onAddToBucketClicked;
+  final ValueSetter<Pair<Product, int>> onAddToBucketClicked;
 
   const HorizontalProductsList({
     super.key,
@@ -20,17 +20,22 @@ class HorizontalProductsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 300,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 8),
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          final product = list[index];
-          final pair = Pair(first: product.id ?? 0, second: index);
-          return SmallProduct(
-            product: product,
-            onProductClicked: onProductClicked,
-            onAddToBucketClicked: () => onAddToBucketClicked(pair),
+      child: ValueListenableBuilder<List<Product>>(
+        valueListenable: list,
+        builder: (_, items, _) {
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            itemCount: list.value.length,
+            itemBuilder: (context, index) {
+              final product = list.value[index];
+              final pair = Pair(first: product, second: index);
+              return SmallProduct(
+                product: product,
+                onProductClicked: onProductClicked,
+                onAddToBucketClicked: () => onAddToBucketClicked(pair),
+              );
+            },
           );
         },
       ),
